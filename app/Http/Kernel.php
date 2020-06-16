@@ -61,6 +61,9 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'cors' => \Medz\Cors\Laravel\Middleware\ShouldGroup::class,
+        'api.refresh'=>\App\Http\Middleware\Api\RefreshTokenMiddleware::class,
+        'admin.guard'=>\App\Http\Middleware\Api\AdminGuardMiddleware::class,
     ];
 
     /**

@@ -13,6 +13,45 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::group([
+
+    'namespace'  => 'Api',
+    'prefix'     => 'v1',
+    'middleware' => 'cors'
+
+], function ($router) {
+    Route::post('/users','UserController@store')->name('users.store');
+    Route::post('/login','UserController@login')->name('users.login');
+
+    /* token 验证接口 */
+    Route::group([
+        'middleware'=>['api.refresh']
+    ], function() {
+        Route::get('/users/info', 'UserController@info')->name('users.info');
+        Route::get('/users', 'UserController@index')->name('users.index');
+        Route::get('/logout', 'UserController@logout')->name('users.logout');
+
+    });
+
+
+    /* 管理员 */
+    Route::group([
+        'middleware'=>['admin.guard']
+    ], function() {
+        Route::post('/admins', 'AdminController@store')->name('admins.store');
+        Route::post('/admin/login', 'AdminController@login')->name('admins.login');
+
+        /* token 验证接口 */
+        Route::group([
+            'middleware'=>['api.refresh']
+        ], function() {
+            Route::get('/admins/info', 'AdminController@info')->name('admins.info');
+            Route::get('/admins', 'AdminController@index')->name('admins.index');
+            Route::get('/admins/{user}', 'AdminController@show')->name('admins.show');
+            Route::get('/admins/logout', 'AdminController@logout')->name('admins.logout');
+
+        });
+    });
+
 });
