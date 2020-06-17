@@ -33,7 +33,7 @@ class AdminController extends Controller
         $present_guard =Auth::getDefaultDriver();
         $token=Auth::claims(['guard'=>$present_guard])->attempt(['name'=>$request->name,'password'=>$request->password]);
         if($token) {
-            return $this->setStatusCode(201)->success(['token' => 'bearer ' . $token]);
+            return $this->success(['token' => 'bearer ' . $token]);
         }
         return $this->failed('账号或密码错误',400);
     }

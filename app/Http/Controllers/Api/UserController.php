@@ -41,7 +41,7 @@ class UserController extends Controller
         $present_guard = Auth::getDefaultDriver();
         $token         = Auth::claims(['guard' => $present_guard])->attempt(['name' => $request->name, 'password' => $request->password]);
         if ($token) {
-            return $this->setStatusCode(201)->success(['token' => 'Bearer ' . $token]);
+            return $this->success(['token' => 'Bearer ' . $token]);
         }
         return $this->failed('账号或密码错误', 400);
     }

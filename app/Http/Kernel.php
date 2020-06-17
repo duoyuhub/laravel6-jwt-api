@@ -38,7 +38,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            // 'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -64,6 +64,8 @@ class Kernel extends HttpKernel
         'cors' => \Medz\Cors\Laravel\Middleware\ShouldGroup::class,
         'api.refresh'=>\App\Http\Middleware\Api\RefreshTokenMiddleware::class,
         'admin.guard'=>\App\Http\Middleware\Api\AdminGuardMiddleware::class,
+        'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
+        'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken',
     ];
 
     /**

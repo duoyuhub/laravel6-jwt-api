@@ -17,12 +17,12 @@ class RefreshTokenMiddleware extends BaseMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      *
      * @return mixed
+     * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
+     *
      */
     public function handle($request, Closure $next)
     {
@@ -35,14 +35,14 @@ class RefreshTokenMiddleware extends BaseMiddleware
         $present_guard = Auth::getDefaultDriver();
 
         //获取当前token
-        $token=Auth::getToken();
+        $token = Auth::getToken();
 
         //即使过期了，也能获取到token里的 载荷 信息。
         $payload = Auth::manager()->getJWTProvider()->decode($token->get());
 
         //如果不包含guard字段或者guard所对应的值与当前的guard守护值不相同
         //证明是不属于当前guard守护的token
-        if(empty($payload['guard'])||$payload['guard']!=$present_guard){
+        if (empty($payload['guard']) || $payload['guard'] != $present_guard) {
             throw new TokenInvalidException();
         }
         //使用 try 包裹，以捕捉 token 过期所抛出的 TokenExpiredException  异常
