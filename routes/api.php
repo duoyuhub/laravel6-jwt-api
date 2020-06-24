@@ -33,6 +33,8 @@ Route::group([
             Route::post('/admin/login', 'AdminController@login')->name('admins.login');
         });
 
+        /* 测试接口 */
+        Route::any('/index', 'ProductController@index');
 
     });
 
