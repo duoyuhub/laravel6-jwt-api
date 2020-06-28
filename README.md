@@ -11,6 +11,7 @@
 - laravel 6.*
 - php 7.2
 - mysql 5.5
+- mongodb 4.*
 
 ## 使用
 
@@ -19,12 +20,17 @@
 
 2. **创建 .env 文件**
     - `cp .env.example .env`
+    
+3. **composer**
+    - `composer install`
 
-3. **创建应用 secret**
+4. **创建应用 secret**
     - `php artisan key:generate`
-
-4. **创建jwt secret**
+    
+5. **创建jwt secret**
     - `php artisan jwt:secret`
 
+6. **ide-helper**
+    - `php artisan ide-helper:generate`
 
 
