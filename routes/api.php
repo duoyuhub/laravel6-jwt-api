@@ -40,19 +40,27 @@ Route::group([
 
     /* 高频 token 验证接口 */
     Route::group([
-        'middleware'=>['throttle:60,1',  'api.refresh']
+        'middleware'=>['throttle:60,1']
     ], function() {
-        /* 用户相关接口 */
-        Route::get('/users/info', 'UserController@info')->name('users.info');
-        Route::get('/users', 'UserController@index')->name('users.index');
-        Route::get('/logout', 'UserController@logout')->name('users.logout');
+        /* 小程序相关接口 */
+        Route::middleware('api.refresh')->group(function(){
+            /* 用户相关接口 */
+            Route::get('/users/info', 'UserController@info')->name('users.info');
+            Route::get('/users', 'UserController@index')->name('users.index');
+            Route::get('/logout', 'UserController@logout')->name('users.logout');
+        });
 
-        /* 管理员相关接口*/
+        /* 管理系统关接口*/
         Route::middleware('admin.guard')->group(function(){
+            /* 管理员相关接口*/
             Route::get('/admins/info', 'AdminController@info')->name('admins.info');
             Route::get('/admins', 'AdminController@index')->name('admins.index');
             Route::get('/admins/{user}', 'AdminController@show')->name('admins.show');
             Route::get('/admins/logout', 'AdminController@logout')->name('admins.logout');
+
+            /* 商品相关接口 */
+            Route::get('/categories', 'CategoryController@index')->name('goods.category.index');
+            Route::post('/categories', 'CategoryController@store')->name('goods.category.store');
         });
     });
 
